@@ -1,4 +1,12 @@
-# HELLO README
+# DEMOGL
+
+# What is this about?
+---
+In Feb 24, 2026 I started this project to start learning about graphics programming, OpenGL and game development... Honestly I wasn't sure about how far I could get so I didn't record the process but now I feel more secure about how things are going, this repo as I say, started as a general learning stuff, I tried to made it become a game engine but things didn't go as planed and the hole code base was a mess, a mess that made me realize my lack of organization, and thats a good thing to be honest, that's why I opened a new repo to develop the engine and this one now will serve as a base for only learning graphics and building demos.
+
+![plot](../BookGL/resources/photos/book1.jpg)
+![plot](resources/photos/book2.jpg)
+```
 
 --- 
 ## TODO
