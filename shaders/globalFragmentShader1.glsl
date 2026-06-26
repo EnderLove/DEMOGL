@@ -105,10 +105,12 @@ void main(){
             // Flash light
             result += calcFlashLight(flashLight, norm, fragPos, viewDir); 
             
-            depth = linearizeDepth(gl_FragCoord.z) / far;
+            depth = linearizeDepth(gl_FragCoord.z) / far; // division by "far" to map values into [0, 1]
             FragColor = vec4(vec3(depth), 1.0);
 
+            //FragColor = vec4(result + (depth / 2), 1.0); // Why depth/2 ? 
             FragColor = vec4(result + depth, 1.0);
+            //FragColor = vec4(result, 1.0);
             break;
 
         case 1:
@@ -189,7 +191,7 @@ vec3 calcFlashLight(FlashLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
     vec3 diffuse  = light.diffuse  * (diff * vec3(texture(material.texture_diffuse1 , texCoord)));
     vec3 specular = light.specular * (spec * vec3(texture(material.texture_specular1, texCoord))); 
 
-    ambient  *= intensity;
+    ambient  *= intensity * attenuation;
     diffuse  *= intensity * attenuation;
     specular *= intensity * attenuation;
 

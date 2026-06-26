@@ -44,7 +44,7 @@ class Scene{
             //camera(glm::vec3(0.0f, 3.0f, 3.0f));
             metalCubePath = "../resources/Models/PhysicsCube/PhysicsCube.obj";
             //scenarioModelPath = "../resources/Models/PhysicsFloor/PhysicsFloor.obj";
-            scenarioModelPath = "../resources/Models/Scenario01/Scenario01.obj";
+            scenarioModelPath = "../resources/Models/City/city.obj";
             containerModelPath = "../resources/Models/Container/container.obj";
 
             metalCube = new Model(metalCubePath);
@@ -88,6 +88,7 @@ class Scene{
 
             // TEXTURE BINDING 
             //textures.woodBoxContainer.bindTexture(1);
+            textures.metal.bindTexture(1);
             textures.pixelRedEye.bindTexture(7);
             textures.container2.bindTexture(4);
             textures.container2Spec.bindTexture(5);
@@ -141,6 +142,7 @@ class Scene{
             */ 
 
             globalShader.use();
+            globalShader.setInt("material.texture_diffuse1", 1);
             globalShader.setFloat("material.shininess", 256);
             glm::mat4 scenarioModel = glm::mat4(1.0f);
             scenarioModel = glm::translate(scenarioModel, glm::vec3(0.0f, 0.0f, 0.0f));
