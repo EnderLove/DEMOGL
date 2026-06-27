@@ -1,84 +1,87 @@
 #ifndef VECTORS_LIB_H
 #define VECTORS_LIB_H
 
+#include <glm/glm.hpp>
 #include <assert.h>
 #include <math.h>
 
-class Vec2{
+class Vec2f{
     public:
-        float x;
-        float y;
+        union{float x; float u;};
+        union{float y; float v;};
 
     public:
-        Vec2();
-        Vec2(const float value);
-        Vec2(const Vec2 &rhs);
-        Vec2(float X, float Y);
-        Vec2(const float *xy);
-        Vec2 &operator = (const Vec2 &rhs);
+        Vec2f();
+        Vec2f(const float value);
+        Vec2f(const Vec2f &rhs);
+        Vec2f(float X, float Y);
+        Vec2f(const float *xy);
+        Vec2f(const glm::vec2& v);
+        Vec2f &operator = (const Vec2f &rhs);
 
-        bool        operator == (const Vec2 &rhs) const;
-        bool        operator != (const Vec2 &rhs) const;
-        Vec2        operator +  (const Vec2 &rhs) const;
-        const Vec2 &operator += (const Vec2 &rhs);
-        const Vec2 &operator -= (const Vec2 &rhs);
-        Vec2        operator -  (const Vec2 &rhs) const;
-        Vec2        operator *  (const float rhs) const;
-        const Vec2 &operator *= (const float rhs);
-        const Vec2 &operator /= (const float rhs);
-        float       operator [] (const int   idx) const;
-        float      &operator [] (const int   idx);
+        bool         operator == (const Vec2f &rhs) const;
+        bool         operator != (const Vec2f &rhs) const;
+        Vec2f        operator +  (const Vec2f &rhs) const;
+        const Vec2f &operator += (const Vec2f &rhs);
+        const Vec2f &operator -= (const Vec2f &rhs);
+        Vec2f        operator -  (const Vec2f &rhs) const;
+        Vec2f        operator *  (const float rhs) const;
+        const Vec2f &operator *= (const float rhs);
+        const Vec2f &operator /= (const float rhs);
+        float        operator [] (const int   idx) const;
+        float       &operator [] (const int   idx);
 
-        const Vec2 &Normalize();
+        const Vec2f &Normalize();
         float GetMagnitude() const;
         bool IsValid() const;
-        float Dot(const Vec2 &rhs) const { return x * rhs.x + y * rhs.y; }
+        float Dot(const Vec2f &rhs) const { return x * rhs.x + y * rhs.y; }
         const float *ToPtr() const { return &x; }
 };
 
-class Vec3 {
+class Vec3f {
     public:
-        float x;
-        float y;
-        float z;
+        union{float x; float r;};
+        union{float y; float g;};
+        union{float z; float b;};
 
     public:
-        Vec3();
-        Vec3(float value);
-        Vec3(const Vec3 &rhs);
-        Vec3(float X, float Y, float Z);
-        Vec3(const float *xyz);
-        Vec3 &operator = (const Vec3  &rhs);
-        Vec3 &operator = (const float *rhs);
+        Vec3f();
+        Vec3f(float value);
+        Vec3f(const Vec3f &rhs);
+        Vec3f(float X, float Y, float Z);
+        Vec3f(const float *xyz);
+        Vec3f(const glm::vec3& v);
+        Vec3f &operator = (const Vec3f  &rhs);
+        Vec3f &operator = (const float *rhs);
 
-        bool        operator == (const Vec3 &rhs) const;
-        bool        operator != (const Vec3 &rhs) const;
-        Vec3        operator +  (const Vec3 &rhs) const;
-        const Vec3 &operator += (const Vec3 &rhs);
-        const Vec3 &operator -= (const Vec3 &rhs);
-        Vec3        operator -  (const Vec3 &rhs) const;
-        Vec3        operator *  (const float rhs) const;
-        Vec3        operator /  (const float rhs) const;
-        const Vec3 &operator *= (const float rhs);
-        const Vec3 &operator /= (const float rhs);
-        float       operator [] (const int   idx) const;
-        float      &operator [] (const int   idx);
+        bool         operator == (const Vec3f &rhs) const;
+        bool         operator != (const Vec3f &rhs) const;
+        Vec3f        operator +  (const Vec3f &rhs) const;
+        const Vec3f &operator += (const Vec3f &rhs);
+        const Vec3f &operator -= (const Vec3f &rhs);
+        Vec3f        operator -  (const Vec3f &rhs) const;
+        Vec3f        operator *  (const float rhs) const;
+        Vec3f        operator /  (const float rhs) const;
+        const Vec3f &operator *= (const float rhs);
+        const Vec3f &operator /= (const float rhs);
+        float        operator [] (const int   idx) const;
+        float       &operator [] (const int   idx);
 
         void Zero() { x = 0.0f; y = 0.0f; z = 0.0f; }
 
-        Vec3 Cross(const Vec3 &rhs) const;
-        float Dot (const Vec3 &rhs) const;
+        Vec3f Cross(const Vec3f &rhs) const;
+        float Dot (const Vec3f &rhs) const;
 
-        const Vec3 &Normalize();
+        const Vec3f &Normalize();
         float GetMagnitude() const;
         float GetLenghtSqr() const { return Dot(*this); }
         bool IsValid() const;
-        void GetOrtho(Vec3 &u, Vec3 &v) const;
+        void GetOrtho(Vec3f &u, Vec3f &v) const;
 
         const float * ToPtr() const { return &x; }
 };
 
-class Vec4{
+class Vec4f{
     public:
         float x;
         float y;
@@ -86,27 +89,28 @@ class Vec4{
         float w;
 
     public:
-        Vec4();
-        Vec4(const float value);
-        Vec4(const Vec4 &rhs);
-        Vec4(float X, float Y, float Z, float W);
-        Vec4(const float *rhs);
-        Vec4 &operator = (const Vec4 &rhs);
+        Vec4f();
+        Vec4f(const float value);
+        Vec4f(const Vec4f &rhs);
+        Vec4f(float X, float Y, float Z, float W);
+        Vec4f(const float *rhs);
+        Vec4f(const glm::vec4& v);
+        Vec4f &operator = (const Vec4f &rhs);
 
-        bool        operator == (const Vec4 &rhs) const;
-        bool        operator != (const Vec4 &rhs) const;
-        Vec4        operator +  (const Vec4 &rhs) const;
-        const Vec4 &operator += (const Vec4 &rhs);
-        const Vec4 &operator -= (const Vec4 &rhs);
-        const Vec4 &operator *= (const Vec4 &rhs);
-        const Vec4 &operator /= (const Vec4 &rhs);
-        Vec4        operator -  (const Vec4 &rhs) const;
-        Vec4        operator *  (const float rhs) const;
-        float       operator [] (const int idx) const;
-        float      &operator [] (const int idx);
+        bool         operator == (const Vec4f &rhs) const;
+        bool         operator != (const Vec4f &rhs) const;
+        Vec4f        operator +  (const Vec4f &rhs) const;
+        const Vec4f &operator += (const Vec4f &rhs);
+        const Vec4f &operator -= (const Vec4f &rhs);
+        const Vec4f &operator *= (const Vec4f &rhs);
+        const Vec4f &operator /= (const Vec4f &rhs);
+        Vec4f        operator -  (const Vec4f &rhs) const;
+        Vec4f        operator *  (const float rhs) const;
+        float        operator [] (const int idx) const;
+        float       &operator [] (const int idx);
 
-        float Dot(const Vec4 &rhs) const;
-        const Vec4 &Normalize();
+        float Dot(const Vec4f &rhs) const;
+        const Vec4f &Normalize();
         float GetMagnitude() const;
         bool IsValid() const;
         void Zero() { x = 0.0f, y = 0.0f, z = 0.0f, w = 0.0f; }
@@ -121,89 +125,91 @@ class Vec4{
  * ==============================================================
 */
 
-inline Vec2::Vec2() : x(0), y(0) {}
+inline Vec2f::Vec2f() : x(0), y(0) {}
 
-inline Vec2::Vec2(const float value) : x(value), y(value) {}
+inline Vec2f::Vec2f(const float value) : x(value), y(value) {}
 
-inline Vec2::Vec2(const Vec2 &rhs) : x(rhs.x), y(rhs.y) {}
+inline Vec2f::Vec2f(const Vec2f &rhs) : x(rhs.x), y(rhs.y) {}
 
-inline Vec2::Vec2(float X, float Y) : x(X), y(Y) {}
+inline Vec2f::Vec2f(float X, float Y) : x(X), y(Y) {}
 
-inline Vec2::Vec2(const float *xy) : x(xy[0]), y(xy[1]) {}
+inline Vec2f::Vec2f(const float *xy) : x(xy[0]), y(xy[1]) {}
 
-inline Vec2 &Vec2::operator = (const Vec2 &rhs){
+inline Vec2f::Vec2f(const glm::vec2& v) : x(v.x), y(v.y) {}
+
+inline Vec2f &Vec2f::operator = (const Vec2f &rhs){
     x = rhs.x;
     y = rhs.y;
     return *this;
 }
 
-inline bool Vec2::operator == (const Vec2 & rhs) const {
+inline bool Vec2f::operator == (const Vec2f & rhs) const {
     if (x != rhs.x) return false;
     if (y != rhs.y) return false;
     return true;
 }
 
-inline bool Vec2::operator != (const Vec2 &rhs) const {
+inline bool Vec2f::operator != (const Vec2f &rhs) const {
     if (*this == rhs) return false;
     return true;
 }
 
-inline Vec2 Vec2::operator + (const Vec2 &rhs) const {
-    Vec2 temp;
+inline Vec2f Vec2f::operator + (const Vec2f &rhs) const {
+    Vec2f temp;
     temp.x = x + rhs.x;
     temp.y = y + rhs.y;
     return temp;
 }
 
-inline const Vec2 &Vec2::operator += (const Vec2 &rhs){
+inline const Vec2f &Vec2f::operator += (const Vec2f &rhs){
     x += rhs.x;
     y += rhs.y;
     return *this;
 }
 
-inline const Vec2 &Vec2::operator -= (const Vec2 &rhs){
+inline const Vec2f &Vec2f::operator -= (const Vec2f &rhs){
     x -= rhs.x;
     y -= rhs.y;
     return *this;
 }
 
-inline Vec2 Vec2::operator - (const Vec2 &rhs) const {
-    Vec2 temp;
+inline Vec2f Vec2f::operator - (const Vec2f &rhs) const {
+    Vec2f temp;
     temp.x = x - rhs.x;
     temp.y = y - rhs.y;
     return temp;
 }
 
-inline Vec2 Vec2::operator * (const float rhs) const {
-    Vec2 temp;
+inline Vec2f Vec2f::operator * (const float rhs) const {
+    Vec2f temp;
     temp.x = x * rhs;
     temp.y = y * rhs;
     return temp;
 }
 
-inline const Vec2 &Vec2::operator *= (const float rhs){
+inline const Vec2f &Vec2f::operator *= (const float rhs){
     x *= rhs;
     y *= rhs;
     return *this;
 }
 
-inline const Vec2 &Vec2::operator /= (const float rhs){
+inline const Vec2f &Vec2f::operator /= (const float rhs){
     x /= rhs;
     y /= rhs;
     return *this;
 }
 
-inline float Vec2::operator [] (const int idx) const {
+inline float Vec2f::operator [] (const int idx) const {
     assert( idx >= 0 && idx < 2 );
     return (&x)[idx];
 }
 
-inline float &Vec2::operator [] (const int idx){
+inline float &Vec2f::operator [] (const int idx){
     assert( idx >= 0 && idx < 2 );
     return (&x)[idx];
 }
 
-inline const Vec2 &Vec2::Normalize(){
+inline const Vec2f &Vec2f::Normalize(){
     float mag = GetMagnitude();
     float invMag = 1.0f / mag;
     if (0.0f * invMag == 0.0f * invMag){
@@ -213,7 +219,7 @@ inline const Vec2 &Vec2::Normalize(){
     return *this;
 }
 
-inline float Vec2::GetMagnitude() const {
+inline float Vec2f::GetMagnitude() const {
     float mag;
 
     mag = x * x + y * y;
@@ -222,7 +228,7 @@ inline float Vec2::GetMagnitude() const {
     return mag;
 }
 
-inline bool Vec2::IsValid() const {
+inline bool Vec2f::IsValid() const {
     if (x * 0.0f != x * 0.0f) return false;
     if (y * 0.0f != y * 0.0f) return false;
     return true;
@@ -234,127 +240,129 @@ inline bool Vec2::IsValid() const {
  * ==============================================================
 */
 
-inline Vec3::Vec3() : x(0), y(0), z(0) {}
+inline Vec3f::Vec3f() : x(0), y(0), z(0) {}
 
-inline Vec3::Vec3(float value) : x(value), y(value), z(value) {}
+inline Vec3f::Vec3f(float value) : x(value), y(value), z(value) {}
 
-inline Vec3::Vec3(const Vec3 &rhs) : x(rhs.x), y(rhs.y), z(rhs.z) {}
+inline Vec3f::Vec3f(const Vec3f &rhs) : x(rhs.x), y(rhs.y), z(rhs.z) {}
 
-inline Vec3::Vec3(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
+inline Vec3f::Vec3f(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
 
-inline Vec3::Vec3(const float *xyz) : x(xyz[0]), y(xyz[1]), z(xyz[2]) {}
+inline Vec3f::Vec3f(const float *xyz) : x(xyz[0]), y(xyz[1]), z(xyz[2]) {}
 
-inline Vec3 &Vec3::operator = (const Vec3 &rhs) {
+inline Vec3f::Vec3f(const glm::vec3& v) : x(v.x), y(v.y), z(v.z) {}
+
+inline Vec3f &Vec3f::operator = (const Vec3f &rhs) {
     x = rhs.x;
     y = rhs.y;
     z = rhs.z;
     return *this;
 }
 
-inline Vec3 &Vec3::operator = (const float *rhs) {
+inline Vec3f &Vec3f::operator = (const float *rhs) {
     x = rhs[0];
     y = rhs[1];
     z = rhs[2];
     return *this;
 }
 
-inline bool Vec3::operator == (const Vec3 &rhs) const {
+inline bool Vec3f::operator == (const Vec3f &rhs) const {
     if (x != rhs.x) return false;
     if (y != rhs.y) return false;
     if (z != rhs.z) return false;
     return true;
 }
 
-inline bool Vec3::operator != (const Vec3 &rhs) const {
+inline bool Vec3f::operator != (const Vec3f &rhs) const {
     if (*this == rhs) return false;
     return true;
 }
 
-inline Vec3 Vec3::operator + (const Vec3 &rhs) const {
-    Vec3 temp;
+inline Vec3f Vec3f::operator + (const Vec3f &rhs) const {
+    Vec3f temp;
     temp.x = x + rhs.x;
     temp.y = y + rhs.y;
     temp.z = z + rhs.z;
     return temp;
 }
 
-inline const Vec3 &Vec3::operator += (const Vec3 &rhs) {
+inline const Vec3f &Vec3f::operator += (const Vec3f &rhs) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
     return *this;
 }
 
-inline const Vec3 &Vec3::operator -= (const Vec3 &rhs) {
+inline const Vec3f &Vec3f::operator -= (const Vec3f &rhs) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
     return *this;
 }
 
-inline Vec3 Vec3::operator - (const Vec3 &rhs) const {
-    Vec3 temp;
+inline Vec3f Vec3f::operator - (const Vec3f &rhs) const {
+    Vec3f temp;
     temp.x = x - rhs.x;
     temp.y = y - rhs.y;
     temp.z = z - rhs.z;
     return temp;
 }
 
-inline Vec3 Vec3::operator * (const float rhs) const {
-    Vec3 temp;
+inline Vec3f Vec3f::operator * (const float rhs) const {
+    Vec3f temp;
     temp.x = x * rhs;
     temp.y = y * rhs;
     temp.z = z * rhs;
     return temp;
 }
 
-inline Vec3 Vec3::operator / (const float rhs) const {
-    Vec3 temp;
+inline Vec3f Vec3f::operator / (const float rhs) const {
+    Vec3f temp;
     temp.x = x / rhs;
     temp.y = y / rhs;
     temp.z = z / rhs;
     return temp;
 }
 
-inline const Vec3 &Vec3::operator *= (const float rhs) {
+inline const Vec3f &Vec3f::operator *= (const float rhs) {
     x *= rhs;
     y *= rhs;
     z *= rhs;
     return *this;
 }
 
-inline const Vec3 &Vec3::operator /= (const float rhs) {
+inline const Vec3f &Vec3f::operator /= (const float rhs) {
     x /= rhs;
     y /= rhs;
     z /= rhs;
     return *this;
 }
 
-inline float Vec3::operator [] (const int idx) const {
+inline float Vec3f::operator [] (const int idx) const {
     assert( idx >= 0 && idx < 3 );
     return (&x)[idx];
 }
 
-inline float &Vec3::operator [] (const int idx) {
+inline float &Vec3f::operator [] (const int idx) {
     assert( idx >= 0 && idx < 3 );
     return (&x)[idx];
 }
 
-inline Vec3 Vec3::Cross(const Vec3 &rhs) const {
+inline Vec3f Vec3f::Cross(const Vec3f &rhs) const {
     // this is A and rhs is B (A x B)
-    Vec3 temp;
+    Vec3f temp;
     temp.x = (y * rhs.z) - (rhs.y * z);
     temp.y = (z * rhs.x) - (rhs.z * x);
     temp.z = (x * rhs.y) - (rhs.x * y);
     return temp;
 }
 
-inline float Vec3::Dot(const Vec3 &rhs) const {
+inline float Vec3f::Dot(const Vec3f &rhs) const {
     float temp = (x * rhs.x) + (y * rhs.y) + (z * rhs.z);
     return temp;
 }
 
-inline const Vec3 &Vec3::Normalize() {
+inline const Vec3f &Vec3f::Normalize() {
     float mag = GetMagnitude();
     float invMag = 1.0f / mag;
     if (0.0f * invMag == 0.0f * invMag){
@@ -365,25 +373,25 @@ inline const Vec3 &Vec3::Normalize() {
     return *this;
 }
 
-inline float Vec3::GetMagnitude() const {
+inline float Vec3f::GetMagnitude() const {
     float mag;
     mag = x * x + y * y + z * z;
     mag = sqrtf(mag);
     return mag;
 }
 
-inline bool Vec3::IsValid() const {
+inline bool Vec3f::IsValid() const {
     if (x * 0.0f != x * 0.0f) return false;
     if (y * 0.0f != y * 0.0f) return false;
     if (z * 0.0f != z * 0.0f) return false;
     return true;
 }
 
-inline void Vec3::GetOrtho(Vec3 &u, Vec3 &v) const {
-    Vec3 n = *this;
+inline void Vec3f::GetOrtho(Vec3f &u, Vec3f &v) const {
+    Vec3f n = *this;
     n.Normalize();
 
-    const Vec3 w = (n.z * n.z > 0.9f * 0.9f) ? Vec3(1.0f, 0.0f, 0.0f) : Vec3(0.0f, 0.0f, 1.0f);
+    const Vec3f w = (n.z * n.z > 0.9f * 0.9f) ? Vec3f(1.0f, 0.0f, 0.0f) : Vec3f(0.0f, 0.0f, 1.0f);
     u = w.Cross(n);
     u.Normalize();
 
@@ -399,22 +407,24 @@ inline void Vec3::GetOrtho(Vec3 &u, Vec3 &v) const {
  * ==============================================================
 */
 
-inline Vec4::Vec4() : x(0), y(0), z(0), w(0) {};
+inline Vec4f::Vec4f() : x(0), y(0), z(0), w(0) {};
 
-inline Vec4::Vec4(const float value) : x(value), y(value), z(value), w(value) {}
+inline Vec4f::Vec4f(const float value) : x(value), y(value), z(value), w(value) {}
 
-inline Vec4::Vec4(const Vec4 &rhs) : x(rhs.x), y(rhs.y), z(rhs.z), w(rhs.w) {}
+inline Vec4f::Vec4f(const Vec4f &rhs) : x(rhs.x), y(rhs.y), z(rhs.z), w(rhs.w) {}
 
-inline Vec4::Vec4(float X, float Y, float Z, float W) : x(X), y(Y), z(Z), w(W) {}
+inline Vec4f::Vec4f(float X, float Y, float Z, float W) : x(X), y(Y), z(Z), w(W) {}
 
-inline Vec4::Vec4(const float *rhs) {
+inline Vec4f::Vec4f(const glm::vec4& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
+
+inline Vec4f::Vec4f(const float *rhs) {
     x = rhs[0];
     y = rhs[1];
     z = rhs[2];
     w = rhs[3];
 }
 
-inline Vec4 &Vec4::operator = (const Vec4 &rhs){
+inline Vec4f &Vec4f::operator = (const Vec4f &rhs){
     x = rhs.x;
     y = rhs.y;
     z = rhs.z;
@@ -422,7 +432,7 @@ inline Vec4 &Vec4::operator = (const Vec4 &rhs){
     return *this;
 }
 
-inline bool Vec4::operator == (const Vec4 &rhs) const {
+inline bool Vec4f::operator == (const Vec4f &rhs) const {
     if (x != rhs.x) return false;
     if (y != rhs.y) return false;
     if (z != rhs.z) return false;
@@ -430,13 +440,13 @@ inline bool Vec4::operator == (const Vec4 &rhs) const {
     return true;
 }
 
-inline bool Vec4::operator != (const Vec4 &rhs) const {
+inline bool Vec4f::operator != (const Vec4f &rhs) const {
     if (*this == rhs) return false;
     return true;
 }
 
-inline Vec4 Vec4::operator + (const Vec4 &rhs) const {
-    Vec4 temp;
+inline Vec4f Vec4f::operator + (const Vec4f &rhs) const {
+    Vec4f temp;
     temp.x = x + rhs.x;
     temp.y = y + rhs.y;
     temp.z = z + rhs.z;
@@ -444,7 +454,7 @@ inline Vec4 Vec4::operator + (const Vec4 &rhs) const {
     return temp;
 }
 
-inline const Vec4 &Vec4::operator += (const Vec4 &rhs){
+inline const Vec4f &Vec4f::operator += (const Vec4f &rhs){
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
@@ -452,7 +462,7 @@ inline const Vec4 &Vec4::operator += (const Vec4 &rhs){
     return *this;
 }
 
-inline const Vec4 &Vec4::operator -= (const Vec4 &rhs){
+inline const Vec4f &Vec4f::operator -= (const Vec4f &rhs){
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
@@ -460,7 +470,7 @@ inline const Vec4 &Vec4::operator -= (const Vec4 &rhs){
     return *this;
 }
 
-inline const Vec4 &Vec4::operator *= (const Vec4 &rhs){
+inline const Vec4f &Vec4f::operator *= (const Vec4f &rhs){
     x /= rhs.x;
     y /= rhs.y;
     z /= rhs.z;
@@ -468,8 +478,8 @@ inline const Vec4 &Vec4::operator *= (const Vec4 &rhs){
     return *this;
 }
 
-inline Vec4 Vec4::operator - (const Vec4 &rhs) const {
-    Vec4 temp;
+inline Vec4f Vec4f::operator - (const Vec4f &rhs) const {
+    Vec4f temp;
     temp.x = x - rhs.x;
     temp.y = y - rhs.y;
     temp.z = z - rhs.z;
@@ -477,8 +487,8 @@ inline Vec4 Vec4::operator - (const Vec4 &rhs) const {
     return temp;
 }
 
-inline Vec4 Vec4::operator * (const float rhs) const {
-    Vec4 temp;
+inline Vec4f Vec4f::operator * (const float rhs) const {
+    Vec4f temp;
     temp.x = x * rhs;
     temp.y = y * rhs;
     temp.z = z * rhs;
@@ -486,17 +496,17 @@ inline Vec4 Vec4::operator * (const float rhs) const {
     return temp;
 }
 
-inline float Vec4::operator [] (const int idx) const {
+inline float Vec4f::operator [] (const int idx) const {
     assert( idx >= 0 && idx < 4 );
     return (&x)[idx];
 }
 
-inline float &Vec4::operator [] (const int idx){
+inline float &Vec4f::operator [] (const int idx){
     assert( idx >= 0 && idx < 4 );
     return (&x)[idx];
 }
 
-inline float Vec4::Dot(const Vec4 &rhs) const {
+inline float Vec4f::Dot(const Vec4f &rhs) const {
     float xx = x + rhs.x;
     float yy = y + rhs.y;
     float zz = z + rhs.z;
@@ -504,7 +514,7 @@ inline float Vec4::Dot(const Vec4 &rhs) const {
     return (xx + yy + zz + ww);
 }
 
-inline const Vec4 &Vec4::Normalize() {
+inline const Vec4f &Vec4f::Normalize() {
     float mag = GetMagnitude();
     float invMag = 1.0f / mag;
     if (0.0f * invMag == 0.0f * invMag) {
@@ -516,14 +526,14 @@ inline const Vec4 &Vec4::Normalize() {
     return *this;
 }
 
-inline float Vec4::GetMagnitude() const {
+inline float Vec4f::GetMagnitude() const {
     float mag;
     mag = x * x + y * y + z * z + w * w;
     mag = sqrtf(mag);
     return mag;
 }
 
-inline bool Vec4::IsValid() const {
+inline bool Vec4f::IsValid() const {
     if (x * 0.0f != x * 0.0f) return false;
     if (y * 0.0f != y * 0.0f) return false;
     if (z * 0.0f != z * 0.0f) return false;
