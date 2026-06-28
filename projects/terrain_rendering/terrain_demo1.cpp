@@ -1,16 +1,20 @@
-#include <GL/gl.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "../../vendor/glad/glad.h"
 
+#include <glad.h>
+//#include "../../vendor/glad/glad.h"
 #include "../../core/utils.h"
-#include "../../core/basic_glfw_camera.h"
+#include "../../core/basicCamera.h"
 #include "../../core/initGlfw.h"
 
 #define WINDOW_WIDTH 16 * 10
 #define WINDOW_HEIGHT 9 * 10
 
+static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+static void CursorPosCallback(GLFWwindow* window, double x, double y);
+static void MouseButtonCallback(GLFWwindow* window, int Button, int Action, int Mode);
+ 
 class TerrainDemo1{
 private:
     GLFWwindow* window = NULL;
@@ -39,7 +43,7 @@ public:
 
     void RenderScene(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        terrain_.Render(gameCamera_);
+        //terrain_.Render(gameCamera_);
     }
 
     void PassiveMouseCB(int x, int y){ gameCamera_->OnMouse(x, y); }
@@ -49,12 +53,12 @@ public:
             switch (key){
                 case GLFW_KEY_ESCAPE:
                 case GLFW_KEY_Q:
-                    glfwDestroyWindow(window)
+                    glfwDestroyWindow(window);
                     glfwTerminate();
                     exit(0);
 
                 case GLFW_KEY_C:
-                    gameCamera_->Print();
+                    //gameCamera_->Print();
                     break;
 
                 case GLFW_KEY_W:
@@ -77,19 +81,19 @@ private:
         int minorVer = 0;
         bool isFullScreen = false;
         window = glfw_init(majorVer, minorVer, WINDOW_WIDTH, WINDOW_HEIGHT, isFullScreen, "Terrain Rendering - Demo");
-        glfwGetCursorPos(window, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 );
+        glfwSetCursorPos(window, WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f );
     }
 
     void InitCallbacks(){
-        glfwSetKeyCallback(window, keyCallback);
+        glfwSetKeyCallback(window, KeyCallback);
         glfwSetCursorPosCallback(window, CursorPosCallback);
         glfwSetMouseButtonCallback(window, MouseButtonCallback);
     }
 
     void InitCamera(){
-        Vector3f Pos(100.0f, 220.0f, -400.0f);
-        Vector2f Target(0.0f, -0.25f, 1.0f);
-        Vector3f Up(0.0f, 1.0f, 0.0f);
+        Vec3f Pos(100.0f, 220.0f, -400.0f);
+        Vec3f Target(0.0f, -0.25f, 1.0f);
+        Vec3f Up(0.0f, 1.0f, 0.0f);
 
         float FOV = 45.0f;
         float zNear = 0.1f;

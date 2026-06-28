@@ -3,14 +3,14 @@
 
 // INTERFACE TO CREATE CAMERAS 
 
-#include "VectorsLib.h"
+#include "math3D.h"
 
 class CameraAPI{
 public:
-    virtual const Vec3 GetPos() const = 0;
-    virtual Matrix4f GetViewportMatrix() const = 0;
-    virtual Matrix4f GetMatrix() const = 0;
-    virtual const Matrix4f GetProjectionMat() = 0;
+    virtual const Vec3f GetPos() const = 0;
+    //virtual Mat4 GetViewportMatrix() const = 0;
+    //virtual Mat4 GetMatrix() const = 0;
+    //virtual const Mat4 GetProjectionMat() = 0;
 };
 
 #endif // CAMERA_API_H!
