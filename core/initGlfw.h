@@ -4,6 +4,8 @@
 #include "../vendor/glad/glad.h"
 #include <GLFW/glfw3.h>
 
-GLFWwindow* glfw_init(int majorVer, int minorVer, int width, int height, bool isFullScreen, const char* title);
+namespace core {
+    GLFWwindow* glfwInit(int majorVer, int minorVer, int width, int height, bool isFullScreen, const char* title);
+}
 
 #endif // INIT_GLFW_H!

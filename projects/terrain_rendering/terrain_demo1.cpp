@@ -8,8 +8,8 @@
 #include "../../core/basicCamera.h"
 #include "../../core/initGlfw.h"
 
-#define WINDOW_WIDTH 16 * 10
-#define WINDOW_HEIGHT 9 * 10
+#define WINDOW_WIDTH 16 * 100
+#define WINDOW_HEIGHT 9 * 100
 
 static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 static void CursorPosCallback(GLFWwindow* window, double x, double y);
@@ -80,7 +80,7 @@ private:
         int majorVer = 0;
         int minorVer = 0;
         bool isFullScreen = false;
-        window = glfw_init(majorVer, minorVer, WINDOW_WIDTH, WINDOW_HEIGHT, isFullScreen, "Terrain Rendering - Demo");
+        window = core::glfwInit(majorVer, minorVer, WINDOW_WIDTH, WINDOW_HEIGHT, isFullScreen, "Terrain Rendering - Demo");
         glfwSetCursorPos(window, WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f );
     }
 

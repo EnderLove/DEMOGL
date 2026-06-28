@@ -37,7 +37,7 @@ static void InitGlad(){
     }
 }
 
-GLFWwindow* glfwInit(int majorVer, int minorVer, int width, int height, bool isFullScreen, const char* title){
+GLFWwindow* core::glfwInit(int majorVer, int minorVer, int width, int height, bool isFullScreen, const char* title){
     glfw_lib_init();
 
     GLFWmonitor* monitor = isFullScreen ? glfwGetPrimaryMonitor() : NULL;
@@ -56,6 +56,7 @@ GLFWwindow* glfwInit(int majorVer, int minorVer, int width, int height, bool isF
     }
 
     glfwMakeContextCurrent(window);
+    InitGlad();
 
     glGetIntegerv(GL_MAJOR_VERSION, &glMajorVersion);
     glGetIntegerv(GL_MINOR_VERSION, &glMinorVersion);
@@ -67,13 +68,12 @@ GLFWwindow* glfwInit(int majorVer, int minorVer, int width, int height, bool isF
         }
     }
     if (minorVer > 0){
-        if (majorVer != glMinorVersion){
+        if (minorVer != glMinorVersion){
             printf("Requested major version %d is not the same as created version %d", majorVer, glMinorVersion);
             exit(0);
         }
     }
 
-    InitGlad();
     EnableDebugOutput();
     glfwSwapInterval(1);
     return window;

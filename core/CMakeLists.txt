@@ -6,17 +6,14 @@ add_library(DemoglCore STATIC
     #src/mesh.cpp
     initGlfw.cpp
     basicCamera.cpp
-    basicCamera.h
     utils.cpp
-    utils.h
-    math3D.cpp
     math3D.h
 )
 
 # Include your own headers
-#target_include_directories(DemoglCore PUBLIC 
-#    ${CMAKE_CURRENT_SOURCE_DIR}/include
-#)
+target_include_directories(DemoglCore PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 
 # Debugging Power-Ups
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
