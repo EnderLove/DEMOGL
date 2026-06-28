@@ -230,7 +230,7 @@ class Mat4{
 
         void Orient(Vec3f pos, Vec3f fwd, Vec3f up);
         void LookAt(Vec3f pos, Vec3f lookAt, Vec3f up);
-        void PerspectiveOpenGL(float fovy, float aspect_ratio, float near, float far);
+        void PerspectiveOpenGL(float fovy, float aspect_ratio, float near, float far); // This takes fovy as degree 
         void PerspectiveVulkan(float fovy, float aspect_ratio, float near, float far);
         void OrthoOpenGL(float xmin, float xmax, float ymin, float ymax, float znear, float zfar);
         void OrthoVulkan(float xmin, float xmax, float ymin, float ymax, float znear, float zfar);
@@ -1055,9 +1055,9 @@ inline void Mat4::LookAt(Vec3f pos, Vec3f lookAt, Vec3f up){
 }
 
 inline void Mat4::PerspectiveOpenGL(float fovy, float aspect_ratio, float near, float far){
-    const float pi = acosf(-1.0f);
-    const float fovy_radians = fovy * pi / 180.0f;
-    const float f = 1.0f / tanf(fovy_radians * 0.5f);
+    ToRadian(fovy);
+
+    const float f = 1.0f / tanf(fovy * 0.5f);
     const float xscale = f;
     const float yscale = f / aspect_ratio;
 
