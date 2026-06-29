@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "glad.h"
+#include "../vendor/glad/glad.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>

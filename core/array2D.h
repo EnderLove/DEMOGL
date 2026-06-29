@@ -88,7 +88,7 @@ public:
             printf("%d: ", y);
             for (int x = 0; x < cols_; x++){
                 float f = (float)p_[y * cols_ + x];
-                printf("%.6f ", f);
+                printf("%.2f ", f);
             }
             printf("\n");
         }

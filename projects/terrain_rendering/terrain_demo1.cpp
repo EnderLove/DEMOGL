@@ -2,11 +2,9 @@
 #include <string.h>
 #include <math.h>
 
-#include <glad.h>
-//#include "../../vendor/glad/glad.h"
-#include "../../core/utils.h"
 #include "../../core/basicCamera.h"
 #include "../../core/initGlfw.h"
+#include "terrain.h"
 
 #define WINDOW_WIDTH 16 * 100
 #define WINDOW_HEIGHT 9 * 100
@@ -20,6 +18,7 @@ private:
     GLFWwindow* window = NULL;
     BasicCamera* gameCamera_ = NULL;
     bool isWireframe_ = false;
+    BaseTerrain terrain_;
 
 public:
     TerrainDemo1(){}
@@ -30,7 +29,7 @@ public:
         CreateWindow();
         InitCallbacks();
         InitCamera();
-        //InitTerrain();
+        InitTerrain();
     }
 
     void Run(){
@@ -43,7 +42,7 @@ public:
 
     void RenderScene(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        //terrain_.Render(gameCamera_);
+        terrain_.Render(*gameCamera_);
     }
 
     void PassiveMouseCB(int x, int y){ gameCamera_->OnMouse(x, y); }
@@ -98,9 +97,13 @@ private:
         float FOV = 45.0f;
         float zNear = 0.1f;
         float zFar = 2000.0f;
-
         PersProjInfo persProjInfo = { FOV, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT, zNear, zFar };
         gameCamera_ = new BasicCamera(persProjInfo, Pos, Target, Up);
+    }
+
+    void InitTerrain(){ 
+        terrain_.InitTerrain();
+        terrain_.LoadFromFile("../../../projects/terrain_rendering/heightmap.save"); 
     }
 };
 
@@ -123,10 +126,10 @@ int main(int argc, char** argv){
     app->Init();
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glFrontFace(GL_CW);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
+    //glFrontFace(GL_CW);
+    //glCullFace(GL_BACK);
+    //glEnable(GL_CULL_FACE);
+    //glEnable(GL_DEPTH_TEST);
 
     app->Run();
 

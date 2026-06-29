@@ -8,7 +8,7 @@ char* ReadBinaryFile(const char* fileName, int& size){
     FILE* f = fopen(fileName, "rb");
     
     if (!f){
-        printf("Error opening '%s'", fileName); 
+        printf("Error opening '%s'\n", fileName); 
         exit(0);
     }
 

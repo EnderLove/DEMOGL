@@ -25,7 +25,7 @@ BasicCamera::BasicCamera(const OrthoProjInfo& orthoProjInfo, const Vec3f& pos, c
 
 void BasicCamera::InitCamera(const PersProjInfo& persProjInfo, const Vec3f& pos, const Vec3f& target, const Vec3f& up){
     persProjInfo_ = persProjInfo;
-    projection_.PerspectiveOpenGL(persProjInfo.FOV, persProjInfo.Height / persProjInfo.Width, persProjInfo.zNear, persProjInfo.zFar); // TODO: OVERLOAD THIS FUNCTION TO ACCEPT DIRECT PROJ_INFO
+    projection_.PerspectiveOpenGL(persProjInfo.FOV, persProjInfo.Width / persProjInfo.Height, persProjInfo.zNear, persProjInfo.zFar); // TODO: OVERLOAD THIS FUNCTION TO ACCEPT DIRECT PROJ_INFO
     windowWidth_  = (int)persProjInfo.Width;
     windowHeight_ = (int)persProjInfo.Height;
     pos_ = pos;
@@ -132,8 +132,8 @@ bool BasicCamera::OnKeyboard(int key){
     }
     return cameraChangedPos;
 }
-
 void BasicCamera::OnMouse(int x, int y){
+
     int deltaX = x - mousePos_.x;
     int deltaY = y - mousePos_.y;
 
@@ -205,10 +205,16 @@ void BasicCamera::Update(){
     up_.Normalize();
 }
 
-//Mat4 BasicCamera::GetMatrix() const{
-//    Mat4 cameraTransformation;
-//    cameraTransformation.InitCameraTransform(pos_, target_, up_);
-//    return cameraTransformation;
-//}
+Mat4 BasicCamera::GetMatrix() const{
+    Mat4 cameraTransformation;
+    cameraTransformation.LookAt(pos_, pos_ + target_, up_);
+    return cameraTransformation;
+}
 
+Mat4 BasicCamera::GetViewProjMatrix() const {
+    Mat4 view = GetMatrix();
+    Mat4 projection = GetProjectionMat();
+    Mat4 viewProj = projection * view;
+    return viewProj;
+}
 

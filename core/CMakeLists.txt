@@ -1,13 +1,11 @@
 # Bundle ONLY your custom engine classes
 add_library(DemoglCore STATIC
-    #src/shader.cpp
-    #src/camera.cpp
-    #src/model.cpp
-    #src/mesh.cpp
     initGlfw.cpp
     basicCamera.cpp
     utils.cpp
     math3D.h
+    array2D.h
+    shader.cpp
 )
 
 # Include your own headers

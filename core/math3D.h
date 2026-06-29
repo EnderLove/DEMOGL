@@ -235,6 +235,9 @@ class Mat4{
         void OrthoOpenGL(float xmin, float xmax, float ymin, float ymax, float znear, float zfar);
         void OrthoVulkan(float xmin, float xmax, float ymin, float ymax, float znear, float zfar);
 
+        void InitCameraTransform(const Vec3f &target, const Vec3f &up);
+        void InitCameraTransform(const Vec3f &pos, const Vec3f &target, const Vec3f &up);
+
         const float *ToPtr() const { return rows[0].ToPtr(); }
         float *ToPtr() { return rows[0].ToPtr(); }
 
@@ -530,10 +533,18 @@ inline const Vec3f &Vec3f::Normalize() {
 }
 
 inline void Vec3f::Rotate(float angle, const Vec3f& v){
+    /* 
     Quat rotationQ(v, angle); // TODO REVIEW THIS IMPLEMENTATION
     Quat conjugateQ = rotationQ.Conjugate();
 
     Quat w = rotationQ * (*this) * conjugateQ;
+    */ 
+    Quat rotationQ(v, ToRadian(angle));
+    Vec3f w = rotationQ.RotatePoint(*this);
+
+    x = w.x;
+    y = w.y;
+    z = w.z;
 }
 
 inline float Vec3f::GetMagnitude() const {
@@ -1055,7 +1066,7 @@ inline void Mat4::LookAt(Vec3f pos, Vec3f lookAt, Vec3f up){
 }
 
 inline void Mat4::PerspectiveOpenGL(float fovy, float aspect_ratio, float near, float far){
-    ToRadian(fovy);
+    fovy = ToRadian(fovy);
 
     const float f = 1.0f / tanf(fovy * 0.5f);
     const float xscale = f;

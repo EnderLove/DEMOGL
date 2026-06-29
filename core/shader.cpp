@@ -1,8 +1,9 @@
-#include "../include/shader.h"
+#include "shader.h"
+#include <stdexcept>
 
 #define LOG_BUFFER_SIZE 512
 
-Shader::Shader(const char *vertexPath, const char *fragmentPath){
+void Shader::BuildShaders(){
     std::string vertexCode;
     std::string fragmentCode;
     std::ifstream vShaderFile;
@@ -14,8 +15,8 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath){
 
     try{
         // Open files 
-        vShaderFile.open(vertexPath);
-        fShaderFile.open(fragmentPath);
+        vShaderFile.open(vertexPath_);
+        fShaderFile.open(fragmentPath_);
 
         std::stringstream vShaderStream, fShaderStream;
 
@@ -75,10 +76,24 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath){
     if (!success){
         glGetProgramInfoLog(ID, LOG_BUFFER_SIZE, NULL, infoLog);
         printf("ERROR::lINKING::SHADER::FAILED\n%s\n", infoLog);
+        throw std::runtime_error("Shader Linking Failed");
     }
 
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+}
+
+Shader::Shader(const char *vertexPath, const char *fragmentPath){
+    vertexPath_   = vertexPath;
+    fragmentPath_ = fragmentPath;
+    BuildShaders();
+}
+
+void Shader::SetFiles(const char* vertexPath, const char* fragmentPath){
+    vertexPath_   = vertexPath;
+    fragmentPath_ = fragmentPath;
+
+    BuildShaders();
 }
 
 void Shader::use(){ glUseProgram(ID); }
@@ -101,6 +116,10 @@ void Shader::setVec3(const std::string name, glm::vec3 value) const {
 }
 void Shader::setVec4(const std::string name, glm::vec4 value) const {
     glUniform4f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z, value.w);
+}
+
+void Shader::setMat4(const std::string name, Mat4 value) const {
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_TRUE, &value.rows[0].x);
 }
 
 
