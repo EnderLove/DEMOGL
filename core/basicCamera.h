@@ -18,7 +18,7 @@ private:
     Vec3f target_;
     Vec3f up_;
 
-    float speed_ = 0.2f;
+    float speed_ = 3.2f;
     int windowWidth_  = 0;
     int windowHeight_ = 0;
     

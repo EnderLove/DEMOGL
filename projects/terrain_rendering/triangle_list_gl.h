@@ -28,6 +28,7 @@ public:
     void CreateGLState();
     void PopulateBuffers(const BaseTerrain* terrain);
     void InitVertices(const BaseTerrain *terrain, std::vector<Vertex> &vertices);
+    void InitIndices(std::vector<unsigned int> &indices);
     void Render();
 
 };

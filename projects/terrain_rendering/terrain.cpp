@@ -4,7 +4,8 @@
 
 #include "terrain.h"
 
-void BaseTerrain::InitTerrain(){
+void BaseTerrain::InitTerrain(float worldScale){
+    worldScale_ = worldScale;
     terrainShader.SetFiles("../../../projects/terrain_rendering/terrain.vert", "../../../projects/terrain_rendering/terrain.frag");
 }
 

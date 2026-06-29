@@ -533,14 +533,14 @@ inline const Vec3f &Vec3f::Normalize() {
 }
 
 inline void Vec3f::Rotate(float angle, const Vec3f& v){
-    /* 
-    Quat rotationQ(v, angle); // TODO REVIEW THIS IMPLEMENTATION
+    
+    Quat rotationQ(v, ToRadian(angle)); // TODO REVIEW THIS IMPLEMENTATION
     Quat conjugateQ = rotationQ.Conjugate();
 
     Quat w = rotationQ * (*this) * conjugateQ;
-    */ 
-    Quat rotationQ(v, ToRadian(angle));
-    Vec3f w = rotationQ.RotatePoint(*this);
+     
+    //Quat rotationQ(v, ToRadian(angle));
+    //Vec3f w = rotationQ.RotatePoint(*this);
 
     x = w.x;
     y = w.y;

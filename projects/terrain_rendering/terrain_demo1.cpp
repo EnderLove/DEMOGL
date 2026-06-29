@@ -60,13 +60,12 @@ public:
                     //gameCamera_->Print();
                     break;
 
-                case GLFW_KEY_W:
+                case GLFW_KEY_M:
                     isWireframe_ = !isWireframe_;
                    
                     if (isWireframe_) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
                     else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                     break;
-
             }
         }
         gameCamera_->OnKeyboard(key);
@@ -102,7 +101,8 @@ private:
     }
 
     void InitTerrain(){ 
-        terrain_.InitTerrain();
+        float worldScale = 0.5f;
+        terrain_.InitTerrain(worldScale);
         terrain_.LoadFromFile("../../../projects/terrain_rendering/heightmap.save"); 
     }
 };
@@ -129,7 +129,7 @@ int main(int argc, char** argv){
     //glFrontFace(GL_CW);
     //glCullFace(GL_BACK);
     //glEnable(GL_CULL_FACE);
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 
     app->Run();
 
