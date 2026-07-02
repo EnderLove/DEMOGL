@@ -6,9 +6,13 @@
 #include "../../core/initGlfw.h"
 #include "terrain.h"
 
-#define WINDOW_WIDTH 16 * 100
-#define WINDOW_HEIGHT 9 * 100
+//#define WINDOW_WIDTH 16 * 100
+//#define WINDOW_HEIGHT 9 * 100
 
+static int WINDOW_WIDTH = 16 * 100;
+static int WINDOW_HEIGHT = 9 * 100;
+
+static void frameBufferSizeCallback(GLFWwindow* window, int width, int height);
 static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 static void CursorPosCallback(GLFWwindow* window, double x, double y);
 static void MouseButtonCallback(GLFWwindow* window, int Button, int Action, int Mode);
@@ -83,6 +87,7 @@ private:
     }
 
     void InitCallbacks(){
+        glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
         glfwSetKeyCallback(window, KeyCallback);
         glfwSetCursorPosCallback(window, CursorPosCallback);
         glfwSetMouseButtonCallback(window, MouseButtonCallback);
@@ -101,7 +106,7 @@ private:
     }
 
     void InitTerrain(){ 
-        float worldScale = 0.5f;
+        float worldScale = 1.0f;
         terrain_.InitTerrain(worldScale);
         terrain_.LoadFromFile("../../../projects/terrain_rendering/heightmap.save"); 
     }
@@ -109,6 +114,12 @@ private:
 
 TerrainDemo1* app = NULL;
 
+static void frameBufferSizeCallback(GLFWwindow* window, int width, int height){
+    glViewport(0, 0, width, height);
+    WINDOW_WIDTH = width;
+    WINDOW_HEIGHT = height;
+    printf("RESIZE: %4d | %4d\n", width, height);
+}
 static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods){
     app->KeyboardCB(key, action);
 }
