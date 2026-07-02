@@ -16,7 +16,7 @@ void BaseTerrain::LoadFromFile(const char* filename){
 }
 
 void BaseTerrain::LoadHeightMapFile(const char* filename){
-    int fileSize = 0;
+    int fileSize = 0; // This value is taken as reference by the ReadBinaryFile
     unsigned char* contentBuffer = (unsigned char*)ReadBinaryFile(filename, fileSize); 
     
     assert(fileSize % sizeof(float) == 0);

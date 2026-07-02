@@ -18,6 +18,7 @@ private:
 
     struct Vertex{
         Vec3f pos;
+        // Uses the x and y values to get the height from the map to set the pos
         void InitVertex(const BaseTerrain* terrain, int x, int z);
     };
 
@@ -25,11 +26,11 @@ public:
     TriangleList(){}
 
     void CreateTriangleList(int width, int depth, const BaseTerrain* terrain);
-    void CreateGLState();
-    void PopulateBuffers(const BaseTerrain* terrain);
-    void InitVertices(const BaseTerrain *terrain, std::vector<Vertex> &vertices);
-    void InitIndices(std::vector<unsigned int> &indices);
-    void Render();
+    void CreateGLState(); // Generates and binds the buffers, enables the vertex attribs
+    void PopulateBuffers(const BaseTerrain* terrain); // Calls the InitVertices() and InitIndices()then fills the buffers
+    void InitVertices(const BaseTerrain *terrain, std::vector<Vertex> &vertices); // Generates the mesh and calls the init vertex func
+    void InitIndices(std::vector<unsigned int> &indices); // Generates the indices for the IBO
+    void Render(); // Binds the Vertex array and draws the elements
 
 };
 

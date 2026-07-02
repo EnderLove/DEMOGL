@@ -7,8 +7,8 @@
 #include <math.h>
 #include <queue>
 
-#define ToRadian(x) (float)(x * 0.01745329252f)
-#define ToDegree(x) (float)(x * 57.29577951308f)
+constexpr float ToRadian(float degree) noexcept { return degree *  0.01745329252f; }
+constexpr float ToDegree(float radian) noexcept { return radian * 57.29577951308f; }
 
 struct PersProjInfo{
     float FOV    = 0.0f;

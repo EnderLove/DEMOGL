@@ -2,6 +2,7 @@
 #define UTILS_H
 
 #include "../vendor/glad/glad.h"
+#include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -9,8 +10,10 @@
 #include <vector>
 #include <cstdint>
 
+// Macro for getting the size of an array 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
+// Reads a binary file, returns the char buffer and the size
 char* ReadBinaryFile(const char* fileName, int& size);
 
 // This handles all the debug output 
