@@ -51,6 +51,8 @@ public:
 
     const T &Get(int Col, int Row) const { return *GetAddr(Col, Row); }
 
+    void Set(int Col, int Row, const T &val){ *GetAddr(Col, Row) = val; }
+
     void Set(int index, const T &val){
 #ifndef NDEBUG
         if (index >= rows_ * cols_){
