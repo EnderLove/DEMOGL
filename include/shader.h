@@ -2,7 +2,7 @@
 #define SHADER_H
 
 #include "../vendor/glad/glad.h"
-#include "../core/math3D.h"
+#include "math3D.h"
 #include <glm/glm.hpp>
 
 #include <stdio.h>

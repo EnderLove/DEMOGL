@@ -1,13 +1,14 @@
-#include <algorithm>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 
-#include "../../core/basicCamera.h"
-#include "../../core/camera.h"
-#include "../../core/initGlfw.h"
+#include "basicCamera.h"
+#include "camera.h"
+#include "initGlfw.h"
+
 #include "terrain.h"
 #include "fault_formation.h"
+
 
 //#define WINDOW_WIDTH 16 * 100
 //#define WINDOW_HEIGHT 9 * 100

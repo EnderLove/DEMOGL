@@ -1,4 +1,3 @@
-#include "../../core/math3D.h"
 #include "triangle_list_gl.h"
 #include "terrain.h"
 #include <cassert>

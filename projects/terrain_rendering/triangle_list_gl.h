@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../../vendor/glad/glad.h"
-#include "../../core/math3D.h"
+#include "math3D.h"
 
 class BaseTerrain;
 

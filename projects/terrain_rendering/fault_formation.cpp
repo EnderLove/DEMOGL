@@ -1,6 +1,5 @@
 #include "fault_formation.h"
 #include <cstdlib>
-#include <sched.h>
 
 void FaultFormation::CreateFaultFormation(int TerrainSize, int Iterations, float MinHeight, float MaxHeight){
     terrainSize_ = TerrainSize;

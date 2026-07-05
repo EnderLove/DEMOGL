@@ -1,7 +1,6 @@
 #include "terrain.h"
 #include <cassert>
 #include <cmath>
-#include <glm/ext/matrix_projection.hpp>
 
 #include "terrain.h"
 

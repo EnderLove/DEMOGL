@@ -4,8 +4,10 @@ add_library(DemoglProject STATIC
     fault_formation.cpp
 )
 
+target_link_libraries(DemoglProject PUBLIC DemoglCore)
+
 # Create your specific demo
 add_executable(terrain_rendering terrain_demo1.cpp)
 
 # Link your core library (this automatically pulls in Vendor, GL, glfw, assimp, etc.)
-target_link_libraries(terrain_rendering PUBLIC DemoglProject DemoglCore)
+target_link_libraries(terrain_rendering PUBLIC DemoglProject)
