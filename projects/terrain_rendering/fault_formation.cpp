@@ -2,10 +2,14 @@
 #include <cstdlib>
 #include <sched.h>
 
-FaultFormation::CreateFaultFormation(int TerrainSize, int Iterations, float MinHeight, float MaxHeight){
+void FaultFormation::CreateFaultFormation(int TerrainSize, int Iterations, float MinHeight, float MaxHeight){
     terrainSize_ = TerrainSize;
     minHeight_ = MinHeight; 
     maxHeight_ = MaxHeight;
+
+    terrainShader.use();
+    terrainShader.setFloat("maxHeight", maxHeight_);
+    terrainShader.setFloat("minHeight", minHeight_);
 
     heightMap_.InitArray2D(TerrainSize, TerrainSize, 0.0f);
 
@@ -16,7 +20,7 @@ FaultFormation::CreateFaultFormation(int TerrainSize, int Iterations, float MinH
     triangleList_.CreateTriangleList(TerrainSize, TerrainSize, this);
 }
 
-FaultFormation::CreateFaultFormationInternal(int Iterations, float MinHeight, float MaxHeight){
+void FaultFormation::CreateFaultFormationInternal(int Iterations, float MinHeight, float MaxHeight){
     float deltaHeight = MaxHeight - MinHeight;
 
     for (int i = 0; i < Iterations; i++){
@@ -46,7 +50,7 @@ FaultFormation::CreateFaultFormationInternal(int Iterations, float MinHeight, fl
     }
 }
 
-FaultFormation::GenRandomTerrainPoints(TerrainPoint &p1, TerrainPoint &p2){
+void FaultFormation::GenRandomTerrainPoints(TerrainPoint &p1, TerrainPoint &p2){
     p1.x = rand() % terrainSize_;
     p1.z = rand() % terrainSize_;
 

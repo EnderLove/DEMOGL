@@ -1,6 +1,7 @@
 add_library(DemoglProject STATIC 
     terrain.cpp
     triangle_list_gl.cpp
+    fault_formation.cpp
 )
 
 # Create your specific demo

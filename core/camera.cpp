@@ -1,5 +1,8 @@
 #include "camera.h"
-Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(FOV){
+#include "math3D.h"
+#include <glm/geometric.hpp>
+
+Camera::Camera(cpm::Vec3f position, cpm::Vec3f up, float yaw, float pitch) : Front(cpm::Vec3f(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(FOV){
     Position = position;
     WorldUp = up;
     Yaw = yaw;
@@ -7,17 +10,17 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : Front
     updateCameraVectors();
 }
 
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(FOV){
-    Position = glm::vec3(posX, posY, posZ);
-    WorldUp = glm::vec3(upX, upY, upZ);
+Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(cpm::Vec3f(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(FOV){
+    Position = cpm::Vec3f(posX, posY, posZ);
+    WorldUp = cpm::Vec3f(upX, upY, upZ);
     Yaw = yaw;
     Pitch = pitch;
     updateCameraVectors();
 }
 
 // returns the view matrix calculated using Euler Angles and the LookAt Matrix
-glm::mat4 Camera::GetViewMatrix() { return glm::lookAt(Position, Position + Front, Up); }
-glm::mat4 Camera::GetTopViewMatrix() { return glm::lookAt(Position, Position + Front, glm::vec3(0.0f, 0.0f, 1.0f)); }
+cpm::Mat4 Camera::GetViewMatrix() { return cpm::LookAt(Position, Position + Front, Up); }
+cpm::Mat4 Camera::GetTopViewMatrix() { return cpm::LookAt(Position, Position + Front, cpm::Vec3f(0.0f, 0.0f, 1.0f)); }
 
 // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
 void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime){
@@ -46,12 +49,12 @@ void Camera::processController(const float *axes, float deltaTime, float xOffset
     // CAMERA MOVEMENT 
     //
     if (!(axes[1] < 0.5f && axes[1] > -0.5f)){
-        if (axes[1] > 0.5f) Position -= (cameraSpeed * axes[1]) * Front; 
-        if (axes[1] < 0.5f) Position += (cameraSpeed * abs(axes[1])) * Front; 
+        if (axes[1] > 0.5f) Position -= Front * (cameraSpeed * axes[1]); 
+        if (axes[1] < 0.5f) Position += Front * (cameraSpeed * abs(axes[1])); 
     }
     if (!(axes[0] < 0.5f && axes[0] > -0.5f)){
-        if (axes[0] > 0.5f) Position += glm::normalize(glm::cross(Front, Up)) * (cameraSpeed * axes[0]); 
-        if (axes[0] < 0.5f) Position -= glm::normalize(glm::cross(Front, Up)) * (cameraSpeed * abs(axes[0])); 
+        if (axes[0] > 0.5f) Position += cpm::Normalize(cpm::Cross(Front, Up)) * (cameraSpeed * axes[0]); 
+        if (axes[0] < 0.5f) Position -= cpm::Normalize(cpm::Cross(Front, Up)) * (cameraSpeed * abs(axes[0])); 
     } 
 
     // CAMERA VIEW MOVEMENT
@@ -107,11 +110,11 @@ void Camera::triggerAimViewFov(const float *controllerAxes){
 void Camera::updateCameraVectors(){
     // calculate the new Front vector
     glm::vec3 front;
-    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    front.y = sin(glm::radians(Pitch));
-    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    Front = glm::normalize(front);
+    front.x = cos(cpm::ToRadian(Yaw)) * cos(cpm::ToRadian(Pitch));
+    front.y = sin(cpm::ToRadian(Pitch));
+    front.z = sin(cpm::ToRadian(Yaw)) * cos(cpm::ToRadian(Pitch));
+    Front = cpm::Normalize(front);
     // re-calculate the Right and Up vector
-    Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-    Up    = glm::normalize(glm::cross(Right, Front));
+    Right = cpm::Normalize(cpm::Cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+    Up    = cpm::Normalize(cpm::Cross(Right, Front));
 }

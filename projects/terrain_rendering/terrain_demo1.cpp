@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -5,6 +6,7 @@
 #include "../../core/basicCamera.h"
 #include "../../core/initGlfw.h"
 #include "terrain.h"
+#include "fault_formation.h"
 
 //#define WINDOW_WIDTH 16 * 100
 //#define WINDOW_HEIGHT 9 * 100
@@ -22,7 +24,8 @@ private:
     GLFWwindow* window = NULL;
     BasicCamera* gameCamera_ = NULL;
     bool isWireframe_ = false;
-    BaseTerrain terrain_;
+    //BaseTerrain terrain_;
+    FaultFormation terrain_;
 
 public:
     TerrainDemo1(){}
@@ -108,7 +111,14 @@ private:
     void InitTerrain(){ 
         float worldScale = 1.0f;
         terrain_.InitTerrain(worldScale);
-        terrain_.LoadFromFile("../../../projects/terrain_rendering/heightmap.save"); 
+        //terrain_.LoadFromFile("../../../projects/terrain_rendering/heightmap.save"); 
+        
+        int size = 256;
+        int iterations = 100;
+        float minHeight = 0.0f;
+        float maxHeight = 300.0f;
+
+        terrain_.CreateFaultFormation(size, iterations, minHeight, maxHeight);
     }
 };
 
