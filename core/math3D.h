@@ -1385,7 +1385,7 @@ namespace cpm{
         //const float xscale = f;
         //const float yscale = f / aspect_ratio;
 
-        const float xscale = f * aspect_ratio;
+        const float xscale = f / aspect_ratio;
         const float yscale = f;
 
         Mat4 result(0.0f);
