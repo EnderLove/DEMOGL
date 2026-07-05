@@ -9,6 +9,7 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "cameraAPI.h"
 #include "math3D.h"
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
@@ -31,31 +32,37 @@ const float FOV         =  45.0f;
 class Camera{
 public:
     // camera Attributes
-    cpm::Vec3f Position;
-    cpm::Vec3f Front;
-    cpm::Vec3f Up;
-    cpm::Vec3f Right;
-    cpm::Vec3f WorldUp;
+    cpm::Vec3f Position_;
+    cpm::Vec3f Front_;
+    cpm::Vec3f Up_;
+    cpm::Vec3f Right_;
+    cpm::Vec3f WorldUp_;
    
     // euler Angles
-    float Yaw;
-    float Pitch;
+    float Yaw_;
+    float Pitch_;
 
     // camera options
-    float MovementSpeed;
-    float MouseSensitivity;
-    float Fov;
+    float MovementSpeed_;
+    float MouseSensitivity_;
+    float Fov_;
+
+    float scrWidth_;
+    float scrHeight_;
+    float zNear_;
+    float zFar_;
 
     // constructor with vectors
-    Camera(cpm::Vec3f position = cpm::Vec3f(0.0f, 0.0f, 0.0f), cpm::Vec3f up = cpm::Vec3f(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+    Camera(float scrWidth, float scrHeight, float zNear, float zFar, cpm::Vec3f position = cpm::Vec3f(0.0f, 0.0f, 0.0f), cpm::Vec3f up = cpm::Vec3f(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
 
     // constructor with scalar values
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
-    cpm::Mat4 GetViewMatrix();
-    cpm::Mat4 GetTopViewMatrix();
-
+    cpm::Mat4 GetViewMatrix() const;
+    cpm::Mat4 GetTopViewMatrix() const;
+    cpm::Mat4 GetProjMatrix() const; 
+   
     // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
     void ProcessKeyboard(Camera_Movement direction, float deltaTime);
     

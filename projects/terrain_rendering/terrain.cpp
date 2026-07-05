@@ -1,6 +1,7 @@
 #include "terrain.h"
 #include <cassert>
 #include <cmath>
+#include <glm/ext/matrix_projection.hpp>
 
 #include "terrain.h"
 
@@ -27,9 +28,11 @@ void BaseTerrain::LoadHeightMapFile(const char* filename){
     //heightMap_.PrintFloat();
 }
 
-void BaseTerrain::Render(const BasicCamera &camera){
-    cpm::Mat4 viewProjection = camera.GetViewProjMatrix();
-    
+void BaseTerrain::Render(const Camera &camera){
+    cpm::Mat4 matView = camera.GetViewMatrix();
+    cpm::Mat4 matProj = camera.GetProjMatrix(); 
+
+    cpm::Mat4 viewProjection = matProj * matView;
     terrainShader.use();
     terrainShader.setMat4("ViewProjection", viewProjection);
     

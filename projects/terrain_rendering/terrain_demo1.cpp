@@ -4,6 +4,7 @@
 #include <math.h>
 
 #include "../../core/basicCamera.h"
+#include "../../core/camera.h"
 #include "../../core/initGlfw.h"
 #include "terrain.h"
 #include "fault_formation.h"
@@ -14,6 +15,9 @@
 static int WINDOW_WIDTH = 16 * 100;
 static int WINDOW_HEIGHT = 9 * 100;
 
+float lastX = 0.0f;
+float lastY = 0.0f;
+
 static void frameBufferSizeCallback(GLFWwindow* window, int width, int height);
 static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 static void CursorPosCallback(GLFWwindow* window, double x, double y);
@@ -23,6 +27,7 @@ class TerrainDemo1{
 private:
     GLFWwindow* window = NULL;
     BasicCamera* gameCamera_ = NULL;
+    Camera* testCamera_ = NULL;
     bool isWireframe_ = false;
     //BaseTerrain terrain_;
     FaultFormation terrain_;
@@ -49,10 +54,19 @@ public:
 
     void RenderScene(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        terrain_.Render(*gameCamera_);
+        //terrain_.Render(*gameCamera_);
+        terrain_.Render(*testCamera_);
     }
 
-    void PassiveMouseCB(int x, int y){ gameCamera_->OnMouse(x, y); }
+    void PassiveMouseCB(int x, int y){ 
+        float xOffset = x - lastX;
+        float yOffset = lastY - y;
+        lastX = x;
+        lastY = y;
+
+        testCamera_->ProcessMouseMovement(xOffset, yOffset);
+        //gameCamera_->OnMouse(x, y); 
+    }
 
     void KeyboardCB(u_int key, int state){
         if (state == GLFW_PRESS){
@@ -75,7 +89,11 @@ public:
                     break;
             }
         }
-        gameCamera_->OnKeyboard(key);
+        //gameCamera_->OnKeyboard(key);
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) testCamera_->ProcessKeyboard(FORWARD , 0.16);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) testCamera_->ProcessKeyboard(BACKWARD, 0.16);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) testCamera_->ProcessKeyboard(LEFT    , 0.16);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) testCamera_->ProcessKeyboard(RIGHT   , 0.16);
     }
 
     void MouseCB(int button, int action, int x, int y){}
@@ -90,6 +108,7 @@ private:
     }
 
     void InitCallbacks(){
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
         glfwSetKeyCallback(window, KeyCallback);
         glfwSetCursorPosCallback(window, CursorPosCallback);
@@ -97,7 +116,8 @@ private:
     }
 
     void InitCamera(){
-        cpm::Vec3f Pos(100.0f, 220.0f, -400.0f);
+        //cpm::Vec3f Pos(100.0f, 220.0f, -400.0f);
+        cpm::Vec3f Pos(0.0f, 0.0f, -400.0f);
         cpm::Vec3f Target(0.0f, -0.25f, 1.0f);
         cpm::Vec3f Up(0.0f, 1.0f, 0.0f);
 
@@ -105,7 +125,8 @@ private:
         float zNear = 0.1f;
         float zFar = 2000.0f;
         cpm::PersProjInfo persProjInfo = { FOV, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT, zNear, zFar };
-        gameCamera_ = new BasicCamera(persProjInfo, Pos, Target, Up);
+        //gameCamera_ = new BasicCamera(persProjInfo, Pos, Target, Up);
+        testCamera_ = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, zNear, zFar,Pos);
     }
 
     void InitTerrain(){ 
@@ -148,8 +169,8 @@ int main(int argc, char** argv){
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     //glFrontFace(GL_CW)
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
+    //glCullFace(GL_BACK);
+    //glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
 
     app->Run();

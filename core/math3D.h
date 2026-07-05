@@ -8,7 +8,7 @@
 #include <queue>
 
 namespace cpm{
-   
+    
     constexpr float ToRadian(float degree) noexcept { return degree *  0.01745329252f; }
     constexpr float ToDegree(float radian) noexcept { return radian * 57.29577951308f; }
 
@@ -216,6 +216,7 @@ namespace cpm{
             Mat4() {}
             Mat4(const Mat4 &rhs);
             Mat4(const float *mat);
+            Mat4(const float val);
             Mat4(const Vec4f &row0, const Vec4f &row1, const Vec4f &row2, const Vec4f &row3);
             Mat4 &operator = (const Mat4 &rhs);
             ~Mat4() {}
@@ -931,6 +932,13 @@ namespace cpm{
         rows[3] = mat + 12;
     }
 
+    inline Mat4::Mat4(const float val){
+        rows[0] = Vec4f(0.0f);
+        rows[1] = Vec4f(0.0f);
+        rows[2] = Vec4f(0.0f);
+        rows[3] = Vec4f(0.0f);
+    }
+
     inline Mat4::Mat4(const Vec4f &row0, const Vec4f &row1, const Vec4f &row2, const Vec4f &row3){
         rows[0] = row0;
         rows[1] = row1;
@@ -1300,8 +1308,15 @@ namespace cpm{
     EXTERNAL 
     ==============================================
     */
+        inline Vec3f Cross(const Vec3f &v1, const Vec3f &v2);
+        inline Mat4 PerspectiveOpenGL(float fovy, float aspect_ratio, float near, float far);
+        inline Vec3f Normalize(const Vec3f &vec);
+        inline Mat4 LookAt(Vec3f pos, Vec3f lookAt, Vec3f up);
 
-    inline Mat4 LookAt(Vec3f pos, Vec3f lookAt, Vec3f up){
+
+        inline Mat4 LookAt(Vec3f pos, Vec3f lookAt, Vec3f up){
+
+        /*
         Vec3f fwd = pos - lookAt;
         fwd.Normalize();
 
@@ -1320,6 +1335,18 @@ namespace cpm{
         result.rows[0] = Vec4f(right.x, right.y, right.z, -pos.Dot(right));
         result.rows[1] = Vec4f(up.x, up.y, up.z, -pos.Dot(up));
         result.rows[2] = Vec4f(fwd.x, fwd.y, fwd.z, -pos.Dot(fwd));
+        result.rows[3] = Vec4f(0.0f, 0.0f, 0.0f, 1.0f);
+        */ 
+
+        Vec3f f = Normalize(lookAt - pos);
+        Vec3f s = Normalize(Cross(f, up));
+        Vec3f u = Cross(s, f);
+
+        Mat4 result;
+
+        result.rows[0] = Vec4f(s.x, s.y, s.z, -s.Dot(pos));
+        result.rows[1] = Vec4f(u.x, u.y, u.z, -u.Dot(pos));
+        result.rows[2] = Vec4f(-f.x, -f.y, -f.z, f.Dot(pos));
         result.rows[3] = Vec4f(0.0f, 0.0f, 0.0f, 1.0f);
 
         return result; 
@@ -1351,12 +1378,24 @@ namespace cpm{
         return result;
     }
 
- 
+    inline Mat4 PerspectiveOpenGL(float fovy, float aspect_ratio, float near, float far){
+        fovy = ToRadian(fovy);
 
+        const float f = 1.0f / tanf(fovy * 0.5f);
+        //const float xscale = f;
+        //const float yscale = f / aspect_ratio;
 
+        const float xscale = f * aspect_ratio;
+        const float yscale = f;
 
+        Mat4 result(0.0f);
 
+        result.rows[0] = Vec4f(xscale, 0.0f, 0.0f, 0.0f);
+        result.rows[1] = Vec4f(0.0f, yscale, 0.0f, 0.0f);
+        result.rows[2] = Vec4f(0.0f, 0.0f, (far + near) / (near - far), (2.0f * far * near) / (near - far));
+        result.rows[3] = Vec4f(0.0f, 0.0f, -1.0f, 0.0f);
 
-
+        return result;
+    }
 }
 #endif // MATH_3D_H!

@@ -4,6 +4,7 @@
 #include "../../core/utils.h"
 #include "../../core/array2D.h"
 #include "../../core/basicCamera.h"
+#include "../../core/camera.h"
 #include "../../core/shader.h"
 #include "triangle_list_gl.h"
 
@@ -11,7 +12,7 @@ class BaseTerrain{
 public:
     BaseTerrain(){}
     void InitTerrain(float worldScale);      // Initialize the shaders and the scale of the world
-    void Render(const BasicCamera &camera);  // Gets the camera and takes the matrix for rendering
+    void Render(const Camera &camera);  // Gets the camera and takes the matrix for rendering
     void LoadFromFile(const char* filename); // Calls the LoadHeightMapFile() and CreateTriangleList
 
     // Gets the true coord from the heightMap

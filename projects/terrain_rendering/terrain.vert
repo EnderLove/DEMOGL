@@ -15,7 +15,8 @@ void main(){
     float deltaHeight = maxHeight - minHeight;
     float heightRatio = (Position.y - minHeight) / deltaHeight;
 
-    float c = heightRatio * 0.8 + 0.2;
+    //float c = heightRatio * 0.8 + 0.2;
+    float c = heightRatio;
 
     Color = vec4(c, c, c, 1.0);
 }

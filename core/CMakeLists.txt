@@ -2,6 +2,7 @@
 add_library(DemoglCore STATIC
     initGlfw.cpp
     basicCamera.cpp
+    camera.cpp
     utils.cpp
     math3D.h
     array2D.h
