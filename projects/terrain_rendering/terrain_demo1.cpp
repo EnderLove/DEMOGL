@@ -97,14 +97,14 @@ private:
     }
 
     void InitCamera(){
-        Vec3f Pos(100.0f, 220.0f, -400.0f);
-        Vec3f Target(0.0f, -0.25f, 1.0f);
-        Vec3f Up(0.0f, 1.0f, 0.0f);
+        cpm::Vec3f Pos(100.0f, 220.0f, -400.0f);
+        cpm::Vec3f Target(0.0f, -0.25f, 1.0f);
+        cpm::Vec3f Up(0.0f, 1.0f, 0.0f);
 
         float FOV = 45.0f;
         float zNear = 0.1f;
         float zFar = 2000.0f;
-        PersProjInfo persProjInfo = { FOV, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT, zNear, zFar };
+        cpm::PersProjInfo persProjInfo = { FOV, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT, zNear, zFar };
         gameCamera_ = new BasicCamera(persProjInfo, Pos, Target, Up);
     }
 

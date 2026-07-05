@@ -35,7 +35,7 @@ class Shader{
         void setVec3 (const std::string name, glm::vec3 value) const;
         void setVec4 (const std::string name, glm::vec4 value) const;
 
-        void setMat4 (const std::string name, Mat4 value) const;
+        void setMat4 (const std::string name, cpm::Mat4 value) const;
 
         void setAttenuation (glm::vec3 value) const;
         void setAttenuation (glm::vec3 value, std::string nLight) const;

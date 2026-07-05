@@ -14,9 +14,9 @@ private:
 
     std::string name_;
 
-    Vec3f pos_;
-    Vec3f target_;
-    Vec3f up_;
+    cpm::Vec3f pos_;
+    cpm::Vec3f target_;
+    cpm::Vec3f up_;
 
     float speed_ = 3.2f;
     int windowWidth_  = 0;
@@ -30,25 +30,25 @@ private:
     bool onLeftEdge_  = false;
     bool onRigthEdge_ = false;
 
-    Vec2i mousePos_ = Vec2i(0, 0);
+    cpm::Vec2i mousePos_ = cpm::Vec2i(0, 0);
     
-    PersProjInfo persProjInfo_;
-    Mat4 projection_;
+    cpm::PersProjInfo persProjInfo_;
+    cpm::Mat4 projection_;
 
 public: 
     BasicCamera(){}
     BasicCamera(int windowWidth, int windowHeigth);
-    BasicCamera(const PersProjInfo&  persProjInfo , const Vec3f& pos, const Vec3f& target, const Vec3f& up);
-    BasicCamera(const OrthoProjInfo& orthoProjInfo, const Vec3f& pos, const Vec3f& target, const Vec3f& up);
+    BasicCamera(const cpm::PersProjInfo&  persProjInfo , const cpm::Vec3f& pos, const cpm::Vec3f& target, const cpm::Vec3f& up);
+    BasicCamera(const cpm::OrthoProjInfo& orthoProjInfo, const cpm::Vec3f& pos, const cpm::Vec3f& target, const cpm::Vec3f& up);
 
-    void InitCamera(const PersProjInfo&  persProjInfo , const Vec3f& pos, const Vec3f& target, const Vec3f& up);
-    void InitCamera(const OrthoProjInfo& orthoProjInfo, const Vec3f& pos, const Vec3f& target, const Vec3f& up);
+    void InitCamera(const cpm::PersProjInfo&  persProjInfo , const cpm::Vec3f& pos, const cpm::Vec3f& target, const cpm::Vec3f& up);
+    void InitCamera(const cpm::OrthoProjInfo& orthoProjInfo, const cpm::Vec3f& pos, const cpm::Vec3f& target, const cpm::Vec3f& up);
 
     void SetPosition(float x, float y, float z);
-    void SetPosition(const Vec3f& pos);
+    void SetPosition(const cpm::Vec3f& pos);
 
     void SetTarget(float x, float y, float z);
-    void SetTarget(const Vec3f& target);
+    void SetTarget(const cpm::Vec3f& target);
 
     void SetUp(float x, float y, float z){ up_.x = x; up_.y = y; up_.z = z; }
 
@@ -59,17 +59,17 @@ public:
     void UpdateMousePosSilent(int x, int y);
 
     void OnRender();
-    Mat4 GetMatrix() const;
+    cpm::Mat4 GetMatrix() const;
 
-    const Vec3f GetPos() const { return pos_; }
-    const Vec3f& GetTarget() const { return target_; }
-    const Vec3f& GetUp() const { return up_; }
-    const Mat4 GetProjectionMat() const { return projection_; }
-    const PersProjInfo& GetPersProjInfo() const { return persProjInfo_; }
+    const cpm::Vec3f GetPos() const { return pos_; }
+    const cpm::Vec3f& GetTarget() const { return target_; }
+    const cpm::Vec3f& GetUp() const { return up_; }
+    const cpm::Mat4 GetProjectionMat() const { return projection_; }
+    const cpm::PersProjInfo& GetPersProjInfo() const { return persProjInfo_; }
     
-    Mat4 GetViewProjMatrix() const;
-    Mat4 GetViewMatrix() const { return GetMatrix(); }
-    Mat4 GetViewportMatrix() const;
+    cpm::Mat4 GetViewProjMatrix() const;
+    cpm::Mat4 GetViewMatrix() const { return GetMatrix(); }
+    cpm::Mat4 GetViewportMatrix() const;
 
     void SetSpeed(float speed);
     void SetName(const std::string& name) { name_ = name; }

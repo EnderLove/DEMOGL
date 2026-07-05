@@ -28,7 +28,7 @@ void BaseTerrain::LoadHeightMapFile(const char* filename){
 }
 
 void BaseTerrain::Render(const BasicCamera &camera){
-    Mat4 viewProjection = camera.GetViewProjMatrix();
+    cpm::Mat4 viewProjection = camera.GetViewProjMatrix();
     
     terrainShader.use();
     terrainShader.setMat4("ViewProjection", viewProjection);

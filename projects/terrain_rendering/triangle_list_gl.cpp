@@ -53,7 +53,7 @@ void TriangleList::Vertex::InitVertex(const BaseTerrain* terrain, int x, int z){
     float y = terrain->GetHeightFromMapCoord(x, z);
     
     float worldScale = terrain->GetWorldScale();
-    pos = Vec3f(x * worldScale, y, z * worldScale);
+    pos = cpm::Vec3f(x * worldScale, y, z * worldScale);
 }
 
 void TriangleList::InitVertices(const BaseTerrain *terrain, std::vector<Vertex> &vertices){

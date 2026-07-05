@@ -17,7 +17,7 @@ private:
     GLuint IBO_;
 
     struct Vertex{
-        Vec3f pos;
+        cpm::Vec3f pos;
         // Uses the x and y values to get the height from the map to set the pos
         void InitVertex(const BaseTerrain* terrain, int x, int z);
     };
