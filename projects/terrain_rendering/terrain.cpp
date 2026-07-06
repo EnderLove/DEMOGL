@@ -4,6 +4,13 @@
 
 #include "terrain.h"
 
+BaseTerrain::~BaseTerrain(){ Destroy(); };
+
+void BaseTerrain::Destroy(){
+    heightMap_.Destroy();
+    triangleList_.Destroy();
+}
+
 void BaseTerrain::InitTerrain(float worldScale){
     worldScale_ = worldScale;
     terrainShader.SetFiles("../../../projects/terrain_rendering/terrain.vert", "../../../projects/terrain_rendering/terrain.frag");

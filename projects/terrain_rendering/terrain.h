@@ -13,6 +13,9 @@
 class BaseTerrain{
 public:
     BaseTerrain(){}
+    ~BaseTerrain();
+
+    void Destroy();
     void InitTerrain(float worldScale);      // Initialize the shaders and the scale of the world
     void Render(const Camera &camera);       // Gets the camera and takes the matrix for rendering
     void LoadFromFile(const char* filename); // Calls the LoadHeightMapFile() and CreateTriangleList

@@ -94,7 +94,7 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
     }
     // update Front, Right and Up Vectors using the updated Euler angles
     
-    printf("YAW: %f || PITCH: %f\n", Yaw_, Pitch_);
+    //printf("YAW: %f || PITCH: %f\n", Yaw_, Pitch_);
 
     updateCameraVectors();
 }

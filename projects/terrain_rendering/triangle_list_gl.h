@@ -24,6 +24,9 @@ private:
 
 public:
     TriangleList(){}
+    ~TriangleList();
+
+    void Destroy();
 
     void CreateTriangleList(int width, int depth, const BaseTerrain* terrain);
     void CreateGLState(); // Generates and binds the buffers, enables the vertex attribs

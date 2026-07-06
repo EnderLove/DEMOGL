@@ -2,6 +2,14 @@
 #include "terrain.h"
 #include <cassert>
 
+TriangleList::~TriangleList(){ Destroy(); }
+
+void TriangleList::Destroy(){
+    if (VAO_ > 1) glDeleteVertexArrays(1, &VAO_);
+    if (VBO_ > 1) glDeleteBuffers(1, &VBO_);
+    if (IBO_ > 1) glDeleteBuffers(1, &IBO_);
+}
+
 void TriangleList::CreateTriangleList(int width, int depth, const BaseTerrain* terrain){
     width_ = width;
     depth_ = depth;
