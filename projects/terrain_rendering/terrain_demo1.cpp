@@ -9,10 +9,6 @@
 #include "terrain.h"
 #include "fault_formation.h"
 
-
-//#define WINDOW_WIDTH 16 * 100
-//#define WINDOW_HEIGHT 9 * 100
-
 static int WINDOW_WIDTH = 16 * 100;
 static int WINDOW_HEIGHT = 9 * 100;
 
@@ -118,7 +114,7 @@ private:
 
     void InitCamera(){
         //cpm::Vec3f Pos(100.0f, 220.0f, -400.0f);
-        cpm::Vec3f Pos(0.0f, 0.0f, -400.0f);
+        cpm::Vec3f Pos(0.0f, 200.0f, -200.0f);
         cpm::Vec3f Target(0.0f, -0.25f, 1.0f);
         cpm::Vec3f Up(0.0f, 1.0f, 0.0f);
 
@@ -135,12 +131,13 @@ private:
         terrain_.InitTerrain(worldScale);
         //terrain_.LoadFromFile("../../../projects/terrain_rendering/heightmap.save"); 
         
-        int size = 256;
+        int size = 512;
         int iterations = 100;
         float minHeight = 0.0f;
-        float maxHeight = 300.0f;
+        float maxHeight = 100.0f;
+        float filter = 0.8f;
 
-        terrain_.CreateFaultFormation(size, iterations, minHeight, maxHeight);
+        terrain_.CreateFaultFormation(size, iterations, minHeight, maxHeight, filter);
     }
 };
 
