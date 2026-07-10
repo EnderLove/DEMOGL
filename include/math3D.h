@@ -2,10 +2,16 @@
 #define MATH_3D_H
 
 #include <assimp/config.h>
+#include <cstdlib>
 #include <glm/glm.hpp>
 #include <assert.h>
 #include <math.h>
+#include <stdio.h>
 #include <queue>
+
+#define RANDOM rand  // TODO : SET THIS TO THE UTILS? 
+
+// TODO : CREATE A SECOND LIBRARY FOR NON LINEAR ALGEBRA MATH?
 
 namespace cpm{
     
@@ -1396,6 +1402,24 @@ namespace cpm{
         result.rows[3] = Vec4f(0.0f, 0.0f, -1.0f, 0.0f);
 
         return result;
+    }
+
+    static inline float RandomFloat(){
+        float Max = RAND_MAX;
+        return ((float)RANDOM() / Max);
+    }
+
+    inline float RandomFloatRange(float start, float end){
+        if (end == start) return start;
+        if (end < start){
+            printf("Invalid random range: (%f, %f)\n", start, end);
+            exit(0);
+        }
+
+        float delta = start - end;
+
+        float randomVal = RandomFloat() * delta + start;
+        return randomVal;
     }
 }
 #endif // MATH_3D_H!

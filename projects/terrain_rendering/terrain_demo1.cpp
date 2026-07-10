@@ -12,6 +12,7 @@
 
 #include "terrain.h"
 #include "fault_formation.h"
+#include "midpoint_disp.h"
 
 static int WINDOW_WIDTH = 16 * 100;
 static int WINDOW_HEIGHT = 9 * 100;
@@ -30,8 +31,10 @@ private:
     BasicCamera* gameCamera_ = NULL;
     Camera* testCamera_ = NULL;
     bool isWireframe_ = false;
-    //BaseTerrain terrain_;
-    FaultFormation terrain_;
+
+    //BaseTerrain    terrain_;
+    //FaultFormation terrain_;
+    MidpointDisp   terrain_;
 
     // CONTROL 
     bool editMode = false;
@@ -73,7 +76,8 @@ public:
                 terrain_.Destroy();
                 int Size = 256;
                 float MinHeight = 0.0f;
-                terrain_.CreateFaultFormation(Size, Iterations, MinHeight, MaxHeight, Filter);
+                //terrain_.CreateFaultFormation(Size, Iterations, MinHeight, MaxHeight, Filter);
+                terrain_.CreateMidpointDisplacement(Size, Filter, MinHeight, MaxHeight);
             }
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGui::End();
@@ -185,7 +189,8 @@ private:
         float maxHeight = 100.0f;
         float filter = 0.8f;
 
-        terrain_.CreateFaultFormation(size, iterations, minHeight, maxHeight, filter);
+        //terrain_.CreateFaultFormation(size, iterations, minHeight, maxHeight, filter);
+        terrain_.CreateMidpointDisplacement(size, filter, minHeight, maxHeight);
     }
 
     void InitGUI(){

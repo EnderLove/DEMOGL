@@ -47,7 +47,6 @@ void FaultFormation::CreateFaultFormationInternal(int Iterations, float MinHeigh
             }
         }
     }
-
     SetFIRFilter(Filter);
 }
 

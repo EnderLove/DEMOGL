@@ -2,6 +2,7 @@ add_library(DemoglProject STATIC
     terrain.cpp
     triangle_list_gl.cpp
     fault_formation.cpp
+    midpoint_disp.cpp
 )
 
 target_link_libraries(DemoglProject PUBLIC DemoglCore)
