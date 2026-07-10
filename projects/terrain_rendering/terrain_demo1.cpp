@@ -1,3 +1,4 @@
+#include <cmath>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -61,23 +62,27 @@ public:
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-            
+           
+            static int   sPow = 8;
             static int   Iterations = 100;
             static float MaxHeight  = 200.0f;
             static float Filter     = 0.2f;
+            static float Roughness  = 0.5f;
                 
             ImGui::Begin("Generation Variables");
 
+            ImGui::SliderInt("Terrain Size Pow", &sPow, 1, 9);
             ImGui::SliderInt("Iterations", &Iterations, 0, 1000);
             ImGui::SliderFloat("MaxHeight", &MaxHeight, 0.0f, 1000.0f);
             ImGui::SliderFloat("Filter", &Filter, 0.0f, 1.0f);
+            ImGui::SliderFloat("Roughness", &Roughness, 0.5f, 2.0f);
 
             if (ImGui::Button("Generate")) {
                 terrain_.Destroy();
-                int Size = 256;
+                int Size = pow(2, sPow);
                 float MinHeight = 0.0f;
                 //terrain_.CreateFaultFormation(Size, Iterations, MinHeight, MaxHeight, Filter);
-                terrain_.CreateMidpointDisplacement(Size, Filter, MinHeight, MaxHeight);
+                terrain_.CreateMidpointDisplacement(Size, Roughness, MinHeight, MaxHeight);
             }
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGui::End();

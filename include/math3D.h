@@ -1416,10 +1416,19 @@ namespace cpm{
             exit(0);
         }
 
-        float delta = start - end;
+        float delta = end - start;
 
         float randomVal = RandomFloat() * delta + start;
         return randomVal;
+    }
+
+    inline int CalcNextPowerOfTwo(int x){
+        int ret = 1;
+
+        if (x == 1) return 2;
+
+        while (ret < x) ret = ret * 2;
+        return ret;
     }
 }
 #endif // MATH_3D_H!

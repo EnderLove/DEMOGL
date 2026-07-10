@@ -9,12 +9,11 @@ private:
     float maxHeight_;
 
     void CreateMidpointDisplacementF32(float roughness);
-    void DiamontStep(int rectSize, float curHeight);
+    void DiamondStep(int rectSize, float curHeight);
     void SquareStep (int rectSize, float curHeight);
 
 public:
     void CreateMidpointDisplacement(int terrainSize, float roughness, float minHeight, float maxHeight);
-
 };
 
 #endif // MIDPOINT_DISP_H!
