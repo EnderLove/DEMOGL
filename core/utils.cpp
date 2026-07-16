@@ -8,7 +8,7 @@ char* ReadBinaryFile(const char* fileName, int& size){
     FILE* f = fopen(fileName, "rb");
     
     if (!f){
-        printf("Error opening '%s'", fileName); 
+        printf("Error opening '%s'\n", fileName); 
         exit(0);
     }
 
@@ -22,9 +22,10 @@ char* ReadBinaryFile(const char* fileName, int& size){
 
     size = statBuf.st_size;
     char* p = (char*)malloc(size);
-    //assert(p);
+    assert(p);
 
-    size_t bytesRead = fread(p, 1, size, f);
+    // Changed size: 1 to sizeof(unsigned char) for better understunding 
+    size_t bytesRead = fread(p, sizeof(unsigned char), size, f);
 
     if (bytesRead != size){
         printf("Read file eror file: %s\n", strerror(errno));

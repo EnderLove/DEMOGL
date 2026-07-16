@@ -10,22 +10,22 @@ static float EDGE_STEP = 0.5f;
 BasicCamera::BasicCamera(int windowWidth, int windowHeight){
     windowWidth_  = windowWidth;
     windowHeight_ = windowHeight;
-    pos_    = Vec3f(0.0f, 0.0f, 0.0f);
-    target_ = Vec3f(0.0f, 0.0f, 0.0f);
-    up_     = Vec3f(0.0f, 0.0f, 0.0f);
+    pos_    = cpm::Vec3f(0.0f, 0.0f, 0.0f);
+    target_ = cpm::Vec3f(0.0f, 0.0f, 0.0f);
+    up_     = cpm::Vec3f(0.0f, 0.0f, 0.0f);
     InitInternal();
 }
 
-BasicCamera::BasicCamera(const PersProjInfo& persProjInfo, const Vec3f& pos, const Vec3f& target, const Vec3f& up){
+BasicCamera::BasicCamera(const cpm::PersProjInfo& persProjInfo, const cpm::Vec3f& pos, const cpm::Vec3f& target, const cpm::Vec3f& up){
     InitCamera(persProjInfo, pos, target, up);
 }
-BasicCamera::BasicCamera(const OrthoProjInfo& orthoProjInfo, const Vec3f& pos, const Vec3f& target, const Vec3f& up){
+BasicCamera::BasicCamera(const cpm::OrthoProjInfo& orthoProjInfo, const cpm::Vec3f& pos, const cpm::Vec3f& target, const cpm::Vec3f& up){
     InitCamera(orthoProjInfo, pos, target, up);
 }
 
-void BasicCamera::InitCamera(const PersProjInfo& persProjInfo, const Vec3f& pos, const Vec3f& target, const Vec3f& up){
+void BasicCamera::InitCamera(const cpm::PersProjInfo& persProjInfo, const cpm::Vec3f& pos, const cpm::Vec3f& target, const cpm::Vec3f& up){
     persProjInfo_ = persProjInfo;
-    projection_.PerspectiveOpenGL(persProjInfo.FOV, persProjInfo.Height/ persProjInfo.Width, persProjInfo.zNear, persProjInfo.zFar); // TODO: OVERLOAD THIS FUNCTION TO ACCEPT DIRECT PROJ_INFO
+    projection_.PerspectiveOpenGL(persProjInfo.FOV, persProjInfo.Width / persProjInfo.Height, persProjInfo.zNear, persProjInfo.zFar); // TODO: OVERLOAD THIS FUNCTION TO ACCEPT DIRECT PROJ_INFO
     windowWidth_  = (int)persProjInfo.Width;
     windowHeight_ = (int)persProjInfo.Height;
     pos_ = pos;
@@ -39,7 +39,7 @@ void BasicCamera::InitCamera(const PersProjInfo& persProjInfo, const Vec3f& pos,
     InitInternal();
 }
 
-void BasicCamera::InitCamera(const OrthoProjInfo& orthoProjInfo, const Vec3f& pos, const Vec3f& target, const Vec3f& up){
+void BasicCamera::InitCamera(const cpm::OrthoProjInfo& orthoProjInfo, const cpm::Vec3f& pos, const cpm::Vec3f& target, const cpm::Vec3f& up){
     projection_.OrthoOpenGL(orthoProjInfo.left, orthoProjInfo.right, orthoProjInfo.bottom, orthoProjInfo.top, orthoProjInfo.zNear, orthoProjInfo.zFar);
     windowWidth_  = (int)orthoProjInfo.Width;
     windowHeight_ = (int)orthoProjInfo.Height;
@@ -55,11 +55,11 @@ void BasicCamera::InitCamera(const OrthoProjInfo& orthoProjInfo, const Vec3f& po
 }
 
 void BasicCamera::InitInternal(){
-    Vec3f HTarget(target_.x, 0.0f, target_.z);
+    cpm::Vec3f HTarget(target_.x, 0.0f, target_.z);
     HTarget.Normalize();
 
-    angleH_ = -ToDegree(atan2(target_.z, target_.x));
-    angleV_ = -ToDegree(asin(target_.y));
+    angleH_ = -cpm::ToDegree(atan2(target_.z, target_.x));
+    angleV_ = -cpm::ToDegree(asin(target_.y));
 
     onUpperEdge_ = false;
     onLowerEdge_ = false;
@@ -70,10 +70,10 @@ void BasicCamera::InitInternal(){
 }
 
 void BasicCamera::SetPosition(float x, float y, float z){ pos_.x = x, pos_.y = y; pos_.z = z; InitInternal(); }
-void BasicCamera::SetPosition(const Vec3f& pos){ SetPosition(pos.x, pos.y, pos.z); }
+void BasicCamera::SetPosition(const cpm::Vec3f& pos){ SetPosition(pos.x, pos.y, pos.z); }
 
 void BasicCamera::SetTarget(float x, float y, float z){ target_.x = x; target_.y = y; target_.z = z; InitInternal(); }
-void BasicCamera::SetTarget(const Vec3f& target){ SetTarget(target.x, target.y, target.z); }
+void BasicCamera::SetTarget(const cpm::Vec3f& target){ SetTarget(target.x, target.y, target.z); }
 
 bool BasicCamera::OnKeyboard(int key){
     bool cameraChangedPos = false;
@@ -90,7 +90,7 @@ bool BasicCamera::OnKeyboard(int key){
             break;
 
         case GLFW_KEY_A:{
-                Vec3f left = target_.Cross(up_);
+                cpm::Vec3f left = target_.Cross(up_);
                 left.Normalize();
                 left *= speed_;
                 pos_ += left;
@@ -100,7 +100,7 @@ bool BasicCamera::OnKeyboard(int key){
             break;
 
         case GLFW_KEY_D:{
-                Vec3f right = up_.Cross(target_);
+                cpm::Vec3f right = up_.Cross(target_);
                 right.Normalize();
                 right *= speed_;
                 pos_ += right;
@@ -132,8 +132,8 @@ bool BasicCamera::OnKeyboard(int key){
     }
     return cameraChangedPos;
 }
-
 void BasicCamera::OnMouse(int x, int y){
+
     int deltaX = x - mousePos_.x;
     int deltaY = y - mousePos_.y;
 
@@ -186,15 +186,15 @@ void BasicCamera::OnRender(){
 }
 
 void BasicCamera::Update(){
-    Vec3f yAxis(0.0f, 1.0f, 0.0f);
+    cpm::Vec3f yAxis(0.0f, 1.0f, 0.0f);
 
     // Rotation of the view vector by the horizontal angle around the vertical axis 
-    Vec3f view(1.0f, 0.0f, 0.0f);
+    cpm::Vec3f view(1.0f, 0.0f, 0.0f);
     view.Rotate(angleH_, yAxis);
     view.Normalize();
 
     // Rotation of the view vector by the vertical angle around the horizontal axis 
-    Vec3f u = yAxis.Cross(view);
+    cpm::Vec3f u = yAxis.Cross(view);
     u.Normalize();
     view.Rotate(angleV_, u);
 
@@ -205,10 +205,16 @@ void BasicCamera::Update(){
     up_.Normalize();
 }
 
-//Mat4 BasicCamera::GetMatrix() const{
-//    Mat4 cameraTransformation;
-//    cameraTransformation.InitCameraTransform(pos_, target_, up_);
-//    return cameraTransformation;
-//}
+cpm::Mat4 BasicCamera::GetMatrix() const{
+    cpm::Mat4 cameraTransformation;
+    cameraTransformation.LookAt(pos_, pos_ + target_, up_);
+    return cameraTransformation;
+}
 
+cpm::Mat4 BasicCamera::GetViewProjMatrix() const {
+    cpm::Mat4 view = GetMatrix();
+    cpm::Mat4 projection = GetProjectionMat();
+    cpm::Mat4 viewProj = projection * view;
+    return viewProj;
+}
 
